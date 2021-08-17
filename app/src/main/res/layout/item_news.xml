@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dimen6"
+    card_view:cardBackgroundColor="@color/cardview_light_background"
+    card_view:cardCornerRadius="@dimen/dimen7"
+    card_view:cardElevation="@dimen/dimen3"
+    >
+
+  <LinearLayout
+      android:id="@+id/item"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical"
+      android:clickable="true"
+      android:focusable="true"
+      android:background="?android:selectableItemBackground"
+      android:orientation="horizontal"
+      android:padding="@dimen/dimen10"
+      >
+
+    <ImageView
+        android:id="@+id/iv_article_image"
+        android:layout_width="@dimen/dimen120"
+        android:layout_height="@dimen/dimen80"
+        android:scaleType="centerCrop"
+        tools:src="@color/backgroundGray"
+        tools:ignore="ContentDescription"
+        />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen10"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+
+      <TextView
+          android:id="@+id/tv_article_date"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:alpha="0.3"
+          android:gravity="end"
+          android:textColor="@color/black"
+          android:textSize="@dimen/text_size12"
+          tools:text="2 days ago"
+          />
+
+      <TextView
+          android:id="@+id/tv_article_title"
+          style="@style/TextBoldFont"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:maxLines="2"
+          android:textAlignment="viewStart"
+          android:textColor="@color/black"
+          android:textSize="@dimen/text_size14"
+          tools:text="Article Title"
+          />
+
+      <TextView
+          android:id="@+id/tv_article_description"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginTop="@dimen/dimen2"
+          android:alpha="0.4"
+          android:maxLines="5"
+          android:textAlignment="viewStart"
+          android:textColor="@color/black"
+          android:textSize="@dimen/text_size13"
+          tools:text="Article description"
+          />
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+</androidx.cardview.widget.CardView>

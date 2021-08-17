@@ -1,0 +1,29 @@
+<resources>
+  <string name="app_name">News App</string>
+
+  <!-- General Strings -->
+  <string name="hide">Hide</string>
+  <string name="connection_error">Connection Error</string>
+  <string name="no_internet">No internet connection please try again later</string>
+  <string name="retry">Retry</string>
+  <string name="undo">Undo</string>
+  <string name="some_error">Some error occurred, try again later</string>
+  <string name="list_no_result">Sorry, There are no results here!</string>
+
+  <!-- Home -->
+  <string name="breaking_news">Breaking News</string>
+  <string name="saved_news">Saved News</string>
+  <string name="search_news">Search News</string>
+  <string name="news_details">News Details</string>
+
+  <!-- Search News -->
+  <string name="search_here">Search here…</string>
+  <string name="search_hint">Search for any news you prefer here</string>
+
+  <!-- News Details -->
+  <string name="article_saved_to_local">Article saved to local successfully</string>
+
+  <!-- Saved Articles -->
+  <string name="article_removed">Article removed from your saved list</string>
+
+</resources>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/activity_padding"
+      android:layout_marginTop="@dimen/activity_padding"
+      android:layout_marginEnd="@dimen/activity_padding"
+      android:background="@drawable/bg_gray"
+      android:elevation="@dimen/dimen1"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:padding="@dimen/dimen12"
+      >
+
+    <ImageView
+        android:layout_width="@dimen/dimen24"
+        android:layout_height="@dimen/dimen24"
+        android:layout_marginEnd="@dimen/dimen12"
+        app:srcCompat="@drawable/ic_search"
+        tools:ignore="ContentDescription"
+        />
+
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginEnd="@dimen/dimen10"
+        android:background="@color/transparent"
+        android:hint="@string/search_here"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size14"
+        />
+
+    <ImageView
+        android:layout_width="@dimen/dimen24"
+        android:id="@+id/btn_dismiss_search"
+        android:visibility="gone"
+        android:layout_height="@dimen/dimen24"
+        android:layout_margin="@dimen/dimen3"
+        android:elevation="@dimen/dimen2"
+        android:background="@drawable/btn_white_circle"
+        app:srcCompat="@drawable/ic_dismiss"
+        app:tint="@color/red"
+        android:padding="@dimen/dimen7"
+        tools:ignore="ContentDescription"
+        />
+
+  </LinearLayout>
+
+  <LinearLayout
+      android:id="@+id/search_hint"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:gravity="center"
+      android:padding="@dimen/activity_padding"
+      android:orientation="vertical"
+      >
+
+    <ImageView
+        android:layout_width="@dimen/dimen120"
+        android:layout_height="@dimen/dimen120"
+        android:layout_marginEnd="@dimen/dimen12"
+        app:srcCompat="@drawable/ic_search_selected"
+        tools:ignore="ContentDescription"
+        />
+
+    <TextView
+        style="@style/TextMediumFont"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dimen12"
+        android:text="@string/search_hint"
+        android:textColor="@color/darkGray"
+        />
+
+  </LinearLayout>
+
+  <FrameLayout
+      android:id="@+id/list_container"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:visibility="gone"
+      >
+
+    <include
+        android:id="@+id/included_list"
+        layout="@layout/list_general"
+        />
+
+  </FrameLayout>
+
+</LinearLayout>

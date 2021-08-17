@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_saved_news"
+    app:startDestination="@id/saved_news_fragment">
+
+  <fragment
+      android:id="@+id/saved_news_fragment"
+      android:name="com.mina_mikhail.newsapp.features.news.presentation.saved_news.SavedNewsFragment"
+      android:label="@string/saved_news"
+      tools:layout="@layout/fragment_breaking_news">
+    <action
+        android:id="@+id/action_open_news_details_fragment"
+        app:destination="@id/news_details_fragment"
+        app:enterAnim="@anim/anim_slide_in_right"
+        app:exitAnim="@anim/anim_slide_out_left"
+        app:popEnterAnim="@anim/anim_slide_in_left"
+        app:popExitAnim="@anim/anim_slide_out_right" />
+  </fragment>
+
+  <fragment
+      android:id="@+id/news_details_fragment"
+      android:name="com.mina_mikhail.newsapp.features.news.presentation.news_details.NewsDetailsFragment"
+      android:label="@string/news_details"
+      tools:layout="@layout/fragment_breaking_news">
+    <argument
+        android:name="article"
+        app:argType="com.mina_mikhail.newsapp.features.news.domain.entity.model.Article" />
+  </fragment>
+
+</navigation>

@@ -75,7 +75,12 @@ fun ImageView.loadCircleImage(imageUrl: String?) {
       )
     }
   } else {
-    setImageResource(R.drawable.bg_no_image)
+    load(R.drawable.bg_no_image) {
+      crossfade(true)
+      transformations(
+        CircleCropTransformation()
+      )
+    }
   }
 }
 
@@ -92,6 +97,13 @@ fun ImageView.loadRoundImage(imageUrl: String?) {
       )
     }
   } else {
-    setImageResource(R.drawable.bg_no_image)
+    load(R.drawable.bg_no_image) {
+      crossfade(true)
+      transformations(
+        RoundedCornersTransformation(
+          resources.getDimension(R.dimen.dimen7)
+        )
+      )
+    }
   }
 }

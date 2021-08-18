@@ -69,7 +69,6 @@ dependencies {
   implementation "com.google.code.gson:gson:$gson"
   implementation "com.squareup.okhttp3:logging-interceptor:$interceptor"
   implementation "com.mocklets:pluto:$pluto"
-  implementation "com.google.android.gms:play-services-auth:$play_services"
 
   // UI
   implementation "com.google.android.material:material:$material_design"
@@ -80,7 +79,7 @@ dependencies {
   implementation "io.coil-kt:coil:$coil"
 
   // Utils
-  implementation "androidx.datastore:datastore-preferences:$datastore_preferences"
+  implementation "com.google.android.gms:play-services-auth:$play_services"
 
   // Hilt
   implementation "com.google.dagger:hilt-android:$hilt_version"

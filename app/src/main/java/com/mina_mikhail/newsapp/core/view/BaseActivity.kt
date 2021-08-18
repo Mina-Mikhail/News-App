@@ -8,7 +8,8 @@ import androidx.viewbinding.ViewBinding
 
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
-  protected lateinit var binding: VB
+  private var _binding: VB? = null
+  open val binding get() = _binding!!
   protected lateinit var navController: LiveData<NavController>
 
   override
@@ -32,7 +33,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
   }
 
   private fun initViewBinding() {
-    binding = getViewBinding()
+    _binding = getViewBinding()
   }
 
   abstract fun getViewBinding(): VB
@@ -44,5 +45,12 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
   override
   fun onSupportNavigateUp(): Boolean {
     return navController.value?.navigateUp()!! || super.onSupportNavigateUp()
+  }
+
+  override
+  fun onDestroy() {
+    super.onDestroy()
+
+    _binding = null
   }
 }

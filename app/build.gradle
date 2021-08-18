@@ -69,6 +69,7 @@ dependencies {
   implementation "com.google.code.gson:gson:$gson"
   implementation "com.squareup.okhttp3:logging-interceptor:$interceptor"
   implementation "com.mocklets:pluto:$pluto"
+  implementation "com.google.android.gms:play-services-auth:$play_services"
 
   // UI
   implementation "com.google.android.material:material:$material_design"

@@ -12,7 +12,8 @@ import com.mina_mikhail.newsapp.core.utils.showLoadingDialog
 
 abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
-  protected lateinit var binding: VB
+  private var _binding: VB? = null
+  open val binding get() = _binding!!
   private var mRootView: View? = null
   private var hasInitializedRootView = false
   private var progressDialog: Dialog? = null
@@ -27,7 +28,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
   }
 
   private fun initViewBinding(inflater: LayoutInflater, container: ViewGroup?) {
-    binding = getViewBinding(inflater, container)
+    _binding = getViewBinding(inflater, container)
     mRootView = binding.root
   }
 
@@ -81,4 +82,11 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
   }
 
   fun hideLoading() = hideLoadingDialog(progressDialog, requireActivity())
+
+  override
+  fun onDestroyView() {
+    super.onDestroyView()
+
+    _binding = null
+  }
 }

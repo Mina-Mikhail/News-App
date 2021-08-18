@@ -26,6 +26,7 @@ buildscript {
     gson = '2.8.6'
     interceptor = '4.8.1'
     pluto = '1.0.2-beta'
+    play_services = '19.2.0'
 
     // UI
     material_design = '1.4.0'

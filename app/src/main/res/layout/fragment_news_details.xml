@@ -1,28 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     >
 
-  <WebView
-      android:id="@+id/webView"
+  <data>
+
+    <variable
+        name="viewModel"
+        type="com.mina_mikhail.newsapp.features.news.presentation.news_details.NewsDetailsViewModel"
+        />
+
+    <variable
+        name="article"
+        type="com.mina_mikhail.newsapp.features.news.domain.entity.model.Article"
+        />
+
+  </data>
+
+  <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      />
+      >
 
-  <ImageView
-      android:id="@+id/btn_save_article"
-      android:layout_width="@dimen/dimen60"
-      android:layout_height="@dimen/dimen60"
-      android:layout_gravity="bottom|end"
-      android:elevation="@dimen/dimen3"
-      android:layout_margin="@dimen/activity_padding"
-      android:background="@drawable/btn_white_circle"
-      android:padding="@dimen/dimen16"
-      app:srcCompat="@drawable/ic_saved_news_selected"
-      tools:ignore="ContentDescription"
-      />
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
-</FrameLayout>
+    <ImageView
+        android:layout_width="@dimen/dimen60"
+        android:layout_height="@dimen/dimen60"
+        android:onClick="@{() -> viewModel.saveArticle(article)}"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/activity_padding"
+        android:background="@drawable/btn_white_circle"
+        android:elevation="@dimen/dimen3"
+        android:padding="@dimen/dimen16"
+        app:srcCompat="@drawable/ic_saved_news_selected"
+        tools:ignore="ContentDescription"
+        />
+
+  </FrameLayout>
+
+</layout>

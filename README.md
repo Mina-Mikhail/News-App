@@ -1,7 +1,8 @@
 ## Tech stack & News App libraries
 
 - Navigation component - navigation graph for navigating and replacing screens/fragments
-- ViewBinding - allows to more easily write code that interacts with views and replaces ```findViewById```.
+- DataBinding - allows to more easily write code that interacts with views and replaces ```findViewById```, handle
+  click listeners and different states of loading data inside recyclerView.
 - ViewModel - UI related data holder, lifecycle aware.
 - LiveData - Build data objects that notify views when the underlying database changes.
 - Dagger-Hilt for dependency injection. Object creation and scoping is handled by Hilt.

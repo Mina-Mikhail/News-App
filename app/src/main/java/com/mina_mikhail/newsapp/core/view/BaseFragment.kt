@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.LayoutRes
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.viewbinding.ViewBinding
 import com.mina_mikhail.newsapp.core.utils.hideLoadingDialog
 import com.mina_mikhail.newsapp.core.utils.showLoadingDialog
 
-abstract class BaseFragment<VB : ViewBinding> : Fragment() {
+abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
 
   private var _binding: VB? = null
   open val binding get() = _binding!!
@@ -28,8 +30,10 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
   }
 
   private fun initViewBinding(inflater: LayoutInflater, container: ViewGroup?) {
-    _binding = getViewBinding(inflater, container)
+    _binding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
     mRootView = binding.root
+    binding.lifecycleOwner = this
+    binding.executePendingBindings()
   }
 
   override
@@ -51,20 +55,27 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     super.onViewCreated(view, savedInstanceState)
 
     if (!hasInitializedRootView) {
+      getFragmentArguments()
+      setBindingVariables()
       setUpViews()
       observeAPICall()
       handleClickListeners()
-      subscribeToObservables();
+      setupObservers()
 
       hasInitializedRootView = true
     }
   }
 
-  abstract fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
+  @LayoutRes
+  abstract fun getLayoutId(): Int
 
   open fun registerListeners() {}
 
   open fun unRegisterListeners() {}
+
+  open fun getFragmentArguments() {}
+
+  open fun setBindingVariables() {}
 
   open fun setUpViews() {}
 
@@ -72,7 +83,9 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
   open fun handleClickListeners() {}
 
-  open fun subscribeToObservables() {}
+  open fun setupObservers() {
+
+  }
 
   fun showLoading() {
     hideLoading()
@@ -85,11 +98,4 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
   }
 
   fun hideLoading() = hideLoadingDialog(progressDialog, requireActivity())
-
-  override
-  fun onDestroyView() {
-    super.onDestroyView()
-
-    _binding = null
-  }
 }

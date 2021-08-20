@@ -1,14 +1,13 @@
 package com.mina_mikhail.newsapp.features.news.presentation.breaking_news
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mina_mikhail.newsapp.R
 import com.mina_mikhail.newsapp.core.data_source.BaseRemoteDataSource
+import com.mina_mikhail.newsapp.core.enums.DataStatus
 import com.mina_mikhail.newsapp.core.network.Resource.Empty
 import com.mina_mikhail.newsapp.core.network.Resource.Failure
 import com.mina_mikhail.newsapp.core.network.Resource.Loading
@@ -16,8 +15,6 @@ import com.mina_mikhail.newsapp.core.network.Resource.Success
 import com.mina_mikhail.newsapp.core.utils.EndlessRecyclerViewScrollListener
 import com.mina_mikhail.newsapp.core.view.BaseFragment
 import com.mina_mikhail.newsapp.core.view.extensions.handleApiError
-import com.mina_mikhail.newsapp.core.view.extensions.hide
-import com.mina_mikhail.newsapp.core.view.extensions.show
 import com.mina_mikhail.newsapp.databinding.FragmentBreakingNewsBinding
 import com.mina_mikhail.newsapp.features.news.domain.entity.model.Article
 import com.mina_mikhail.newsapp.features.news.presentation.NewsAdapter
@@ -32,8 +29,12 @@ class BreakingNewsFragment : BaseFragment<FragmentBreakingNewsBinding>() {
   private lateinit var scrollListener: EndlessRecyclerViewScrollListener
 
   override
-  fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?) =
-    FragmentBreakingNewsBinding.inflate(inflater, container, false)
+  fun getLayoutId() = R.layout.fragment_breaking_news
+
+  override
+  fun setBindingVariables() {
+    binding.includedList.baseViewModel = viewModel
+  }
 
   override
   fun setUpViews() {
@@ -80,16 +81,14 @@ class BreakingNewsFragment : BaseFragment<FragmentBreakingNewsBinding>() {
       when (it) {
         is Loading -> {
           if (articlesAdapter.currentList.isNullOrEmpty()) {
-            showDataLoading()
+            viewModel.dataLoadingEvent.value = DataStatus.LOADING
           } else {
-            showPaginationLoading()
+            viewModel.dataLoadingEvent.value = DataStatus.LOADING_NEXT_PAGE
           }
         }
         is Empty -> {
           if (articlesAdapter.currentList.isNullOrEmpty()) {
-            showNoData()
-          } else {
-            hidePaginationLoading()
+            viewModel.dataLoadingEvent.value = DataStatus.NO_DATA
           }
         }
         is Success -> {
@@ -106,15 +105,10 @@ class BreakingNewsFragment : BaseFragment<FragmentBreakingNewsBinding>() {
             articlesAdapter.submitList(articlesAdapter.currentList + it.value.articles)
           }
 
-          showData()
+          viewModel.dataLoadingEvent.value = DataStatus.SHOW_DATA
         }
         is Failure -> {
-          if (articlesAdapter.currentList.isNullOrEmpty()) {
-            handleApiError(it, noDataAction = { showNoData() }, noInternetAction = { showNoInternet() })
-          } else {
-            handleApiError(it)
-            hidePaginationLoading()
-          }
+          handleApiError(it)
         }
       }
     })
@@ -149,46 +143,5 @@ class BreakingNewsFragment : BaseFragment<FragmentBreakingNewsBinding>() {
       R.id.action_open_news_details_fragment,
       bundle
     )
-  }
-
-  private fun showDataLoading() {
-    binding.includedList.container.show()
-    binding.includedList.progressBar.show()
-    binding.includedList.emptyViewContainer.hide()
-    binding.includedList.internetErrorViewContainer.hide()
-    binding.includedList.recyclerView.hide()
-    binding.includedList.paginationProgressBar.hide()
-  }
-
-  private fun showPaginationLoading() {
-    binding.includedList.paginationProgressBar.show()
-  }
-
-  private fun hidePaginationLoading() {
-    binding.includedList.paginationProgressBar.hide()
-  }
-
-  private fun showData() {
-    binding.includedList.recyclerView.show()
-    binding.includedList.container.hide()
-    binding.includedList.paginationProgressBar.hide()
-  }
-
-  private fun showNoData() {
-    binding.includedList.container.show()
-    binding.includedList.emptyViewContainer.show()
-    binding.includedList.internetErrorViewContainer.hide()
-    binding.includedList.progressBar.hide()
-    binding.includedList.paginationProgressBar.hide()
-    binding.includedList.recyclerView.hide()
-  }
-
-  private fun showNoInternet() {
-    binding.includedList.container.show()
-    binding.includedList.internetErrorViewContainer.show()
-    binding.includedList.emptyViewContainer.hide()
-    binding.includedList.progressBar.hide()
-    binding.includedList.paginationProgressBar.hide()
-    binding.includedList.recyclerView.hide()
   }
 }

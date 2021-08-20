@@ -10,7 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class NewsActivity : BaseActivity<ActivityNewsBinding>() {
 
   override
-  fun getViewBinding() = ActivityNewsBinding.inflate(layoutInflater)
+  fun getLayoutId() = R.layout.activity_news
 
   override
   fun setUpBottomNavigation() {

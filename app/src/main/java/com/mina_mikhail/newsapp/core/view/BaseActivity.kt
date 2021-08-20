@@ -1,12 +1,14 @@
 package com.mina_mikhail.newsapp.core.view
 
 import android.os.Bundle
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
-import androidx.viewbinding.ViewBinding
 
-abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
+abstract class BaseActivity<VB : ViewDataBinding> : AppCompatActivity() {
 
   private var _binding: VB? = null
   open val binding get() = _binding!!
@@ -33,10 +35,13 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
   }
 
   private fun initViewBinding() {
-    _binding = getViewBinding()
+    _binding = DataBindingUtil.setContentView(this, getLayoutId())
+    binding.lifecycleOwner = this
+    binding.executePendingBindings()
   }
 
-  abstract fun getViewBinding(): VB
+  @LayoutRes
+  abstract fun getLayoutId(): Int
 
   open fun setUpBottomNavigation() {}
 

@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
     >
 
+  <data>
+    <variable
+        name="baseViewModel"
+        type="com.mina_mikhail.newsapp.core.view.BaseViewModel"
+        />
+
+    <import type="com.mina_mikhail.newsapp.core.enums.DataStatus" />
+
+    <import type="android.view.View" />
+  </data>
+
   <LinearLayout
-      android:id="@+id/container"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:gravity="center"
@@ -16,17 +23,15 @@
       >
 
     <LinearLayout
-        android:id="@+id/empty_view_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center"
-        android:visibility="gone"
         android:orientation="vertical"
+        android:visibility="@{baseViewModel.dataLoadingEvent ==  DataStatus.NO_DATA ? View.VISIBLE : View.GONE}"
         tools:ignore="UseCompoundDrawables"
         >
 
       <ImageView
-          android:id="@+id/iv_no_result"
           android:layout_width="@dimen/dimen200"
           android:layout_height="@dimen/dimen200"
           app:srcCompat="@drawable/bg_no_data"
@@ -34,25 +39,23 @@
           />
 
       <TextView
-          android:id="@+id/tv_no_result"
           style="@style/TextMediumFont"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_margin="@dimen/dimen6"
           android:gravity="center"
           android:text="@string/list_no_result"
-          android:textColor="@color/darkGray"
+          android:textColor="@color/black"
           />
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/internet_error_view_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center"
-        android:visibility="gone"
         android:orientation="vertical"
+        android:visibility="@{baseViewModel.dataLoadingEvent ==  DataStatus.NO_INTERNET ? View.VISIBLE : View.GONE}"
         tools:ignore="UseCompoundDrawables"
         >
 
@@ -71,42 +74,40 @@
           android:layout_margin="@dimen/dimen6"
           android:gravity="center"
           android:text="@string/no_internet"
-          android:textColor="@color/darkGray"
+          android:textColor="@color/black"
           />
 
     </LinearLayout>
 
     <com.github.ybq.android.spinkit.SpinKitView
-        android:id="@+id/progress_bar"
         style="@style/SpinKitView.Large.DoubleBounce"
         android:layout_width="@dimen/dimen70"
         android:layout_height="@dimen/dimen70"
         android:layout_gravity="center"
+        android:visibility="@{baseViewModel.dataLoadingEvent ==  DataStatus.LOADING ? View.VISIBLE : View.GONE}"
         app:SpinKit_Color="@color/colorAccent"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:padding="@dimen/dimen10"
+        android:visibility="@{(baseViewModel.dataLoadingEvent == DataStatus.SHOW_DATA || baseViewModel.dataLoadingEvent == DataStatus.LOADING_NEXT_PAGE) ? View.VISIBLE : View.GONE}"
+        />
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        style="@style/SpinKitView.Large.Wave"
+        android:layout_width="@dimen/dimen50"
+        android:layout_height="@dimen/dimen50"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/dimen12"
+        android:visibility="@{baseViewModel.dataLoadingEvent == DataStatus.LOADING_NEXT_PAGE ? View.VISIBLE : View.GONE}"
+        app:SpinKit_Color="@color/colorPrimary"
         />
 
   </LinearLayout>
 
-  <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/recycler_view"
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="1"
-      android:visibility="gone"
-      android:clipToPadding="false"
-      android:layoutAnimation="@anim/layout_list_slide_in_animation"
-      android:padding="@dimen/dimen10"
-      />
-
-  <com.github.ybq.android.spinkit.SpinKitView
-      android:id="@+id/pagination_progress_bar"
-      style="@style/SpinKitView.Large.Wave"
-      android:layout_width="@dimen/dimen50"
-      android:layout_height="@dimen/dimen50"
-      android:layout_gravity="center"
-      android:layout_marginBottom="@dimen/dimen12"
-      android:visibility="gone"
-      app:SpinKit_Color="@color/colorAccent"
-      />
-
-</LinearLayout>
+</layout>

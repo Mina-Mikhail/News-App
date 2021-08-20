@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    >
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/recycler_view"
+  <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layoutAnimation="@anim/layout_list_slide_in_animation"
-      android:layout_weight="1"
-      android:clipToPadding="false"
-      android:padding="@dimen/dimen10"
-      />
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:orientation="vertical"
+      >
 
-</LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:layoutAnimation="@anim/layout_list_slide_in_animation"
+        android:padding="@dimen/dimen10"
+        />
+
+  </LinearLayout>
+
+</layout>

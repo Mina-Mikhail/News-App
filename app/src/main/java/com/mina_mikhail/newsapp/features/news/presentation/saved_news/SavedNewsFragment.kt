@@ -1,8 +1,6 @@
 package com.mina_mikhail.newsapp.features.news.presentation.saved_news
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -25,8 +23,7 @@ class SavedNewsFragment : BaseFragment<FragmentSavedNewsBinding>() {
   private lateinit var articlesAdapter: NewsAdapter
 
   override
-  fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?) =
-    FragmentSavedNewsBinding.inflate(inflater, container, false)
+  fun getLayoutId() = R.layout.fragment_saved_news
 
   override
   fun setUpViews() {

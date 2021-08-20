@@ -2,8 +2,6 @@ package com.mina_mikhail.newsapp.features.news.presentation.search_news
 
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.fragment.app.viewModels
@@ -12,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mina_mikhail.newsapp.R
 import com.mina_mikhail.newsapp.core.data_source.BaseRemoteDataSource
+import com.mina_mikhail.newsapp.core.enums.DataStatus
 import com.mina_mikhail.newsapp.core.network.Resource.Empty
 import com.mina_mikhail.newsapp.core.network.Resource.Failure
 import com.mina_mikhail.newsapp.core.network.Resource.Loading
@@ -38,8 +37,7 @@ class SearchNewsFragment : BaseFragment<FragmentSearchNewsBinding>() {
   private lateinit var searchTextListener: SearchEditTextListener
 
   override
-  fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?) =
-    FragmentSearchNewsBinding.inflate(inflater, container, false)
+  fun getLayoutId() = R.layout.fragment_search_news
 
   override
   fun registerListeners() {
@@ -49,6 +47,12 @@ class SearchNewsFragment : BaseFragment<FragmentSearchNewsBinding>() {
   override
   fun unRegisterListeners() {
     stopSearchListener()
+  }
+
+  override
+  fun setBindingVariables() {
+    binding.viewModel = viewModel
+    binding.includedList.baseViewModel = viewModel
   }
 
   override
@@ -132,17 +136,15 @@ class SearchNewsFragment : BaseFragment<FragmentSearchNewsBinding>() {
       when (it) {
         is Loading -> {
           if (articlesAdapter.currentList.isNullOrEmpty()) {
-            showDataLoading()
+            viewModel.dataLoadingEvent.value = DataStatus.LOADING
           } else {
-            showPaginationLoading()
+            viewModel.dataLoadingEvent.value = DataStatus.LOADING_NEXT_PAGE
           }
         }
         is Empty -> {
           if (articlesAdapter.currentList.isNullOrEmpty()) {
-            showNoData()
+            viewModel.dataLoadingEvent.value = DataStatus.NO_DATA
             hideKeyboard()
-          } else {
-            hidePaginationLoading()
           }
         }
         is Success -> {
@@ -159,15 +161,10 @@ class SearchNewsFragment : BaseFragment<FragmentSearchNewsBinding>() {
             articlesAdapter.submitList(articlesAdapter.currentList + it.value.articles)
           }
 
-          showData()
+          viewModel.dataLoadingEvent.value = DataStatus.SHOW_DATA
         }
         is Failure -> {
-          if (articlesAdapter.currentList.isNullOrEmpty()) {
-            handleApiError(it, noDataAction = { showNoData() }, noInternetAction = { showNoInternet() })
-          } else {
-            handleApiError(it)
-            hidePaginationLoading()
-          }
+          handleApiError(it)
         }
       }
     })
@@ -185,13 +182,17 @@ class SearchNewsFragment : BaseFragment<FragmentSearchNewsBinding>() {
   }
 
   override
-  fun handleClickListeners() {
-    binding.btnDismissSearch.setOnClickListener {
-      initPagingParameters()
-      hideKeyboard()
-      binding.etSearch.setText("")
-      binding.etSearch.clearFocus()
-    }
+  fun setupObservers() {
+    viewModel.clearSearchArea.observe(this, {
+      clearSearchArea()
+    })
+  }
+
+  private fun clearSearchArea() {
+    initPagingParameters()
+    hideKeyboard()
+    binding.etSearch.setText("")
+    binding.etSearch.clearFocus()
   }
 
   private fun onArticleClick(article: Article) {
@@ -217,46 +218,5 @@ class SearchNewsFragment : BaseFragment<FragmentSearchNewsBinding>() {
     binding.listContainer.show()
     binding.btnDismissSearch.show()
     binding.searchHint.hide()
-  }
-
-  private fun showDataLoading() {
-    binding.includedList.container.show()
-    binding.includedList.progressBar.show()
-    binding.includedList.emptyViewContainer.hide()
-    binding.includedList.internetErrorViewContainer.hide()
-    binding.includedList.recyclerView.hide()
-    binding.includedList.paginationProgressBar.hide()
-  }
-
-  private fun showPaginationLoading() {
-    binding.includedList.paginationProgressBar.show()
-  }
-
-  private fun hidePaginationLoading() {
-    binding.includedList.paginationProgressBar.hide()
-  }
-
-  private fun showData() {
-    binding.includedList.recyclerView.show()
-    binding.includedList.container.hide()
-    binding.includedList.paginationProgressBar.hide()
-  }
-
-  private fun showNoData() {
-    binding.includedList.container.show()
-    binding.includedList.emptyViewContainer.show()
-    binding.includedList.internetErrorViewContainer.hide()
-    binding.includedList.progressBar.hide()
-    binding.includedList.paginationProgressBar.hide()
-    binding.includedList.recyclerView.hide()
-  }
-
-  private fun showNoInternet() {
-    binding.includedList.container.show()
-    binding.includedList.internetErrorViewContainer.show()
-    binding.includedList.emptyViewContainer.hide()
-    binding.includedList.progressBar.hide()
-    binding.includedList.paginationProgressBar.hide()
-    binding.includedList.recyclerView.hide()
   }
 }

@@ -1,12 +1,12 @@
 package com.mina_mikhail.newsapp.features.news.presentation
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.mina_mikhail.newsapp.R
+import com.mina_mikhail.newsapp.R.layout
 import com.mina_mikhail.newsapp.core.utils.DateUtils
 import com.mina_mikhail.newsapp.core.utils.convertDateTimeToTimesAgo
 import com.mina_mikhail.newsapp.core.view.extensions.loadRoundImage
@@ -33,8 +33,10 @@ class NewsAdapter(private var itemClick: (Article) -> Unit) : ListAdapter<Articl
     parent: ViewGroup,
     viewType: Int
   ): ArticlesViewHolder {
-    val root = LayoutInflater.from(parent.context).inflate(R.layout.item_news, parent, false)
-    return ArticlesViewHolder(root)
+    val binding = DataBindingUtil.inflate<ItemNewsBinding>(
+      LayoutInflater.from(parent.context), layout.item_news, parent, false
+    )
+    return ArticlesViewHolder(binding)
   }
 
   override
@@ -45,9 +47,8 @@ class NewsAdapter(private var itemClick: (Article) -> Unit) : ListAdapter<Articl
 
   fun getItemByPosition(position: Int): Article = getItem(position)
 
-  inner class ArticlesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+  inner class ArticlesViewHolder(private val binding: ItemNewsBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    private val binding = ItemNewsBinding.bind(itemView)
     private var currentItem: Article? = null
 
     init {

@@ -1,15 +1,15 @@
 package com.mina_mikhail.newsapp.features.news.presentation.breaking_news
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.mina_mikhail.newsapp.core.network.Resource
+import com.mina_mikhail.newsapp.core.view.BaseViewModel
 import com.mina_mikhail.newsapp.features.news.data.repository.NewsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 @HiltViewModel
-class BreakingNewsViewModel @Inject constructor(private val repository: NewsRepository) : ViewModel() {
+class BreakingNewsViewModel @Inject constructor(private val repository: NewsRepository) : BaseViewModel() {
 
   var shouldLoadMore = false
   var isLoading = false

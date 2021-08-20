@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    >
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-      android:id="@+id/swipe_refresh"
+  <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="1"
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:orientation="vertical"
       >
 
-    <include
-        android:id="@+id/included_list"
-        layout="@layout/list_general"
-        />
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
 
-  </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+      <include
+          android:id="@+id/included_list"
+          layout="@layout/list_general"
+          />
 
-</LinearLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+  </LinearLayout>
+
+</layout>

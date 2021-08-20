@@ -1,9 +1,12 @@
 package com.mina_mikhail.newsapp.features.news.presentation.news_details
 
 import android.annotation.SuppressLint
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.os.Build.VERSION_CODES
+import android.webkit.WebChromeClient
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.mina_mikhail.newsapp.R
@@ -22,12 +25,22 @@ class NewsDetailsFragment : BaseFragment<FragmentNewsDetailsBinding>() {
   private lateinit var article: Article
 
   override
-  fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?) =
-    FragmentNewsDetailsBinding.inflate(inflater, container, false)
+  fun getLayoutId() = R.layout.fragment_news_details
+
+  override
+  fun getFragmentArguments() {
+    getArticleFromArguments()
+  }
+
+  override
+  fun setBindingVariables() {
+    binding.viewModel = viewModel
+    binding.article = article
+  }
 
   override
   fun setUpViews() {
-    getArticleFromArguments()
+    showLoading()
 
     setUpWebView()
   }
@@ -39,7 +52,8 @@ class NewsDetailsFragment : BaseFragment<FragmentNewsDetailsBinding>() {
   @SuppressLint("SetJavaScriptEnabled")
   private fun setUpWebView() {
     binding.webView.apply {
-      webViewClient = WebViewClient()
+      webChromeClient = WebChromeClient()
+      webViewClient = getLollipopWebViewClient()
       settings.javaScriptEnabled = true
 
       loadUrl(article.url)
@@ -47,10 +61,26 @@ class NewsDetailsFragment : BaseFragment<FragmentNewsDetailsBinding>() {
   }
 
   override
-  fun handleClickListeners() {
-    binding.btnSaveArticle.setOnClickListener {
-      viewModel.saveArticleToLocal(article)
+  fun setupObservers() {
+    viewModel.onArticleSavedToLocal.observe(this, {
       showMessage(resources.getString(R.string.article_saved_to_local))
+    })
+  }
+
+  @RequiresApi(api = VERSION_CODES.LOLLIPOP) private fun getLollipopWebViewClient(): WebViewClient {
+    return object : WebViewClient() {
+      override
+      fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+        showLoading()
+        val url = request.url.toString()
+        binding.webView.loadUrl(url)
+        return true
+      }
+
+      override
+      fun onPageFinished(view: WebView, url: String) {
+        hideLoading()
+      }
     }
   }
 }

@@ -40,7 +40,10 @@ class BreakingNewsFragment : BaseFragment<FragmentBreakingNewsBinding>() {
     setUpRecyclerView()
 
     initSwipeRefreshLayout()
+  }
 
+  override
+  fun observeAPICall() {
     getBreakingNews()
   }
 

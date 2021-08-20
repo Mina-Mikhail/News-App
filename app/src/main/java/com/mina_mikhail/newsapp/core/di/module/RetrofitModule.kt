@@ -58,7 +58,7 @@ object RetrofitModule {
       OkHttpClient.Builder()
         .readTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
         .connectTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
-        .addNetworkInterceptor(headersInterceptor)
+        .addInterceptor(headersInterceptor)
         .addNetworkInterceptor(logging)
         .addInterceptor(PlutoInterceptor())
         .build()
@@ -66,7 +66,7 @@ object RetrofitModule {
       OkHttpClient.Builder()
         .readTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
         .connectTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
-        .addNetworkInterceptor(headersInterceptor)
+        .addInterceptor(headersInterceptor)
         .build()
     }
   }

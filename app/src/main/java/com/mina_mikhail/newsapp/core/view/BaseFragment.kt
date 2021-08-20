@@ -52,6 +52,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     if (!hasInitializedRootView) {
       setUpViews()
+      observeAPICall()
       handleClickListeners()
       subscribeToObservables();
 
@@ -66,6 +67,8 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
   open fun unRegisterListeners() {}
 
   open fun setUpViews() {}
+
+  open fun observeAPICall() {}
 
   open fun handleClickListeners() {}
 

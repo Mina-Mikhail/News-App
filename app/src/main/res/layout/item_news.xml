@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     >
+
+  <data>
+
+    <variable
+        name="item"
+        type="com.mina_mikhail.newsapp.features.news.domain.entity.model.Article"
+        />
+
+  </data>
 
   <androidx.cardview.widget.CardView
       android:layout_width="match_parent"
@@ -14,7 +24,7 @@
       >
 
     <LinearLayout
-        android:id="@+id/item"
+        android:id="@+id/ll_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:selectableItemBackground"
@@ -26,10 +36,10 @@
         >
 
       <ImageView
-          android:id="@+id/iv_article_image"
           android:layout_width="@dimen/dimen120"
           android:layout_height="@dimen/dimen80"
           android:scaleType="centerCrop"
+          app:loadRoundImage="@{item.urlToImage}"
           tools:ignore="ContentDescription"
           tools:src="@color/backgroundGray"
           />
@@ -43,22 +53,22 @@
           >
 
         <TextView
-            android:id="@+id/tv_article_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:alpha="0.3"
             android:gravity="end"
+            android:text="@{item.articleDateFormatted}"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size12"
             tools:text="2 days ago"
             />
 
         <TextView
-            android:id="@+id/tv_article_title"
             style="@style/TextBoldFont"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="2"
+            android:text="@{item.title}"
             android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size14"
@@ -66,12 +76,12 @@
             />
 
         <TextView
-            android:id="@+id/tv_article_description"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/dimen2"
             android:alpha="0.4"
             android:maxLines="5"
+            android:text="@{item.description}"
             android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size13"

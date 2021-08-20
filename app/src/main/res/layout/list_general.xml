@@ -27,7 +27,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="@{baseViewModel.dataLoadingEvent ==  DataStatus.NO_DATA ? View.VISIBLE : View.GONE}"
+        app:goneUnless="@{baseViewModel.dataLoadingEvent ==  DataStatus.NO_DATA}"
         tools:ignore="UseCompoundDrawables"
         >
 
@@ -55,7 +55,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="@{baseViewModel.dataLoadingEvent ==  DataStatus.NO_INTERNET ? View.VISIBLE : View.GONE}"
+        app:goneUnless="@{baseViewModel.dataLoadingEvent ==  DataStatus.NO_INTERNET}"
         tools:ignore="UseCompoundDrawables"
         >
 
@@ -84,8 +84,8 @@
         android:layout_width="@dimen/dimen70"
         android:layout_height="@dimen/dimen70"
         android:layout_gravity="center"
-        android:visibility="@{baseViewModel.dataLoadingEvent ==  DataStatus.LOADING ? View.VISIBLE : View.GONE}"
         app:SpinKit_Color="@color/colorAccent"
+        app:goneUnless="@{baseViewModel.dataLoadingEvent ==  DataStatus.LOADING}"
         />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -95,7 +95,7 @@
         android:layout_weight="1"
         android:clipToPadding="false"
         android:padding="@dimen/dimen10"
-        android:visibility="@{(baseViewModel.dataLoadingEvent == DataStatus.SHOW_DATA || baseViewModel.dataLoadingEvent == DataStatus.LOADING_NEXT_PAGE) ? View.VISIBLE : View.GONE}"
+        app:goneUnless="@{baseViewModel.dataLoadingEvent == DataStatus.SHOW_DATA || baseViewModel.dataLoadingEvent == DataStatus.LOADING_NEXT_PAGE}"
         />
 
     <com.github.ybq.android.spinkit.SpinKitView
@@ -104,8 +104,8 @@
         android:layout_height="@dimen/dimen50"
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/dimen12"
-        android:visibility="@{baseViewModel.dataLoadingEvent == DataStatus.LOADING_NEXT_PAGE ? View.VISIBLE : View.GONE}"
         app:SpinKit_Color="@color/colorPrimary"
+        app:goneUnless="@{baseViewModel.dataLoadingEvent == DataStatus.LOADING_NEXT_PAGE}"
         />
 
   </LinearLayout>

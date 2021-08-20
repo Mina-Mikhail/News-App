@@ -3,6 +3,7 @@ package com.mina_mikhail.newsapp.core.view.extensions
 import android.view.View
 import android.widget.ImageView
 import androidx.constraintlayout.widget.Group
+import androidx.databinding.BindingAdapter
 import coil.load
 import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
@@ -30,6 +31,14 @@ fun View.invisible() {
   }
 }
 
+@BindingAdapter("app:goneUnless")
+fun View.goneUnless(visible: Boolean) {
+  visibility = if (visible) View.VISIBLE else View.GONE
+  if (this is Group) {
+    this.requestLayout()
+  }
+}
+
 fun View.enable() {
   isEnabled = true
   alpha = 1f
@@ -52,6 +61,7 @@ fun View.showSnackBar(message: String, retryActionName: String? = null, action: 
   snackBar.show()
 }
 
+@BindingAdapter("app:loadImage")
 fun ImageView.loadImage(imageUrl: String?) {
   if (imageUrl != null && imageUrl.isNotEmpty()) {
     load(imageUrl) {
@@ -64,6 +74,7 @@ fun ImageView.loadImage(imageUrl: String?) {
   }
 }
 
+@BindingAdapter("app:loadCircleImage")
 fun ImageView.loadCircleImage(imageUrl: String?) {
   if (imageUrl != null && imageUrl.isNotEmpty()) {
     load(imageUrl) {
@@ -84,6 +95,7 @@ fun ImageView.loadCircleImage(imageUrl: String?) {
   }
 }
 
+@BindingAdapter("app:loadRoundImage")
 fun ImageView.loadRoundImage(imageUrl: String?) {
   if (imageUrl != null && imageUrl.isNotEmpty()) {
     load(imageUrl) {

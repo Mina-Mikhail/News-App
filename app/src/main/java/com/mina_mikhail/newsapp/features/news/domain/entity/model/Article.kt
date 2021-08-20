@@ -2,6 +2,8 @@ package com.mina_mikhail.newsapp.features.news.domain.entity.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.mina_mikhail.newsapp.core.utils.DateUtils
+import com.mina_mikhail.newsapp.core.utils.convertDateTimeToTimesAgo
 import java.io.Serializable
 
 @Entity(tableName = "articles")
@@ -16,7 +18,11 @@ data class Article(
   val url: String,
   val urlToImage: String,
   val source: Source
-) : Serializable
+) : Serializable {
+
+  val articleDateFormatted
+    get() = publishedAt.convertDateTimeToTimesAgo(DateUtils.FULL_DATE_TIME_FORMAT)
+}
 
 data class Source(
   val name: String
